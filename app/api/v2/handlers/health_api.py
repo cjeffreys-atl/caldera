@@ -4,6 +4,7 @@ import aiohttp_apispec
 from aiohttp import web
 
 import app
+from app.api.v2 import security
 from app.api.v2.handlers.base_api import BaseApi
 from app.api.v2.schemas.caldera_info_schemas import CalderaInfoSchema
 
@@ -15,7 +16,7 @@ class HealthApi(BaseApi):
 
     def add_routes(self, app: web.Application):
         router = app.router
-        router.add_get('/health', self.get_health_info)
+        router.add_get('/health', security.authentication_exempt(self.get_health_info))
 
     @aiohttp_apispec.docs(tags=['health'],
                           summary='Health endpoints returns the status of Caldera',
@@ -28,7 +29,7 @@ class HealthApi(BaseApi):
         mapping = {
             'application': 'Caldera',
             'version': app.get_version(),
-            'access': access[0].name,
+            'access': access[0].name if len(access) > 0 else None,  # 0 when not authenticated.
             'plugins': loaded_plugins_sorted
         }
 
