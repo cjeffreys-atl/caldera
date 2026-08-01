@@ -27,3 +27,4 @@ croniter~=3.0.3
 setuptools==75.6.0
 pyasn1>=0.6.4
 wheel>=0.38.1
+certifi>=2022.12.7
