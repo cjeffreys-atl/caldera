@@ -30,3 +30,4 @@ wheel>=0.38.1
 certifi>=2022.12.7
 jaraco.context>=6.1.0
 urllib3>=2.6.0
+idna>=3.7
